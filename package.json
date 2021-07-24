@@ -16,8 +16,8 @@
     "build": "rm -rf dist && tsc --project tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "publish": "yarn build && npm publish --access public",
-    "publish:next": "yarn build && npm publish --access public --tag next"
+    "publish": "yarn build && yarn npm publish --access public",
+    "publish:next": "yarn build && yarn npm publish --access public --tag next"
   },
   "peerDependencies": {
     "@nestjs/common": "^8.0.4",
