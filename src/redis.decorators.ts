@@ -1,7 +1,7 @@
 import {Inject} from "@nestjs/common"
 
-import {getRedisToken} from "./redis.utils"
+import {REDIS_TOKEN} from "./redis.constants"
 
 export const InjectRedis = () => {
-  return Inject(getRedisToken())
+  return Inject(REDIS_TOKEN)
 }

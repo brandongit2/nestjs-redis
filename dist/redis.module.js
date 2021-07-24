@@ -13,21 +13,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RedisModule = void 0;
 const common_1 = require("@nestjs/common");
 const ioredis_1 = __importDefault(require("ioredis"));
-const redis_utils_1 = require("./redis.utils");
+const redis_constants_1 = require("./redis.constants");
 let RedisModule = RedisModule_1 = class RedisModule {
     static register(config) {
+        const RedisProvider = {
+            provide: redis_constants_1.REDIS_TOKEN,
+            useFactory: () => {
+                return new ioredis_1.default(config);
+            },
+        };
         return {
             module: RedisModule_1,
-            providers: [
-                {
-                    provide: redis_utils_1.getRedisToken(),
-                    useValue: new ioredis_1.default(config),
-                },
-            ],
+            providers: [RedisProvider],
+            exports: [RedisProvider],
         };
     }
 };
 RedisModule = RedisModule_1 = __decorate([
+    common_1.Global(),
     common_1.Module({})
 ], RedisModule);
 exports.RedisModule = RedisModule;

@@ -1,6 +1,6 @@
 {
   "name": "@brandonnpm2/nestjs-redis",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A NestJS module for using ioredis.",
   "author": "Brandon Tsang",
   "license": "MIT",
@@ -16,14 +16,12 @@
     "build": "rm -rf dist && tsc --project tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "prepublish:npm": "npm run build",
-    "publish:npm": "npm publish --access public",
-    "prerelease": "npm run build",
-    "release": "release-it"
+    "publish": "yarn build && npm publish --access public",
+    "publish:next": "yarn build && npm publish --access public --tag next"
   },
   "peerDependencies": {
     "@nestjs/common": "^8.0.4",
-    "ioredis": "4.27.6"
+    "ioredis": "^4.27.6"
   },
   "devDependencies": {
     "@nestjs/common": "8.0.4",

@@ -1,19 +1,23 @@
-import {DynamicModule, Module} from "@nestjs/common"
+import {DynamicModule, Global, Module} from "@nestjs/common"
 import IORedis from "ioredis"
 
-import {getRedisToken} from "./redis.utils"
+import {REDIS_TOKEN} from "./redis.constants"
 
+@Global()
 @Module({})
 export class RedisModule {
   static register(config: IORedis.RedisOptions): DynamicModule {
+    const RedisProvider = {
+      provide: REDIS_TOKEN,
+      useFactory: () => {
+        return new IORedis(config)
+      },
+    }
+
     return {
       module: RedisModule,
-      providers: [
-        {
-          provide: getRedisToken(),
-          useValue: new IORedis(config),
-        },
-      ],
+      providers: [RedisProvider],
+      exports: [RedisProvider],
     }
   }
 }

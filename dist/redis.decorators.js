@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InjectRedis = void 0;
 const common_1 = require("@nestjs/common");
-const redis_utils_1 = require("./redis.utils");
+const redis_constants_1 = require("./redis.constants");
 const InjectRedis = () => {
-    return common_1.Inject(redis_utils_1.getRedisToken());
+    return common_1.Inject(redis_constants_1.REDIS_TOKEN);
 };
 exports.InjectRedis = InjectRedis;

@@ -51,7 +51,7 @@ __metadata:
     typescript: 4.3.5
   peerDependencies:
     "@nestjs/common": ^8.0.4
-    ioredis: 4.27.6
+    ioredis: ^4.27.6
   languageName: unknown
   linkType: soft
 
