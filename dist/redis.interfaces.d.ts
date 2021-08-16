@@ -1,1 +1,0 @@
-export { Redis } from "ioredis";
