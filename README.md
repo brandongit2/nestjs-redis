@@ -15,6 +15,7 @@ yarn add nestjs-redis ioredis
 ```ts
 import {Module} from "@nestjs/common"
 import {RedisModule} from "nestjs-redis"
+
 import {AppController} from "./app.controller"
 
 @Module({
@@ -32,17 +33,19 @@ export class AppModule {}
 ### InjectRedis()
 
 ```ts
-import {Controller, Get} from "@nestjs/common"
-import {InjectRedis, Redis} from "nestjs-redis"
+import {Controller, Get, Param} from "@nestjs/common"
+import {InjectRedis} from "nestjs-redis"
+
+import type {Redis} from "ioredis"
 
 @Controller()
 export class AppController {
   constructor(@InjectRedis() private readonly redis: Redis) {}
 
-  @Get()
-  async getSession(id: string) {
-    const session = await this.redis.get(`sess:${id}`)
-    return session
+  @Get(`/something/:id`)
+  async getSomething(@Param(`id`) id: string) {
+    const something = await this.redis.get(id)
+    return something
   }
 }
 ```
