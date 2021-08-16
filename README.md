@@ -5,7 +5,7 @@ A NestJS module for using ioredis.
 ## Installation
 
 ```bash
-yarn add nestjs-redis ioredis
+yarn add @brandonnpm2/nestjs-redis ioredis
 ```
 
 ## Examples
@@ -13,8 +13,8 @@ yarn add nestjs-redis ioredis
 ### RedisModule.register(config)
 
 ```ts
+import {RedisModule} from "@brandonnpm2/nestjs-redis"
 import {Module} from "@nestjs/common"
-import {RedisModule} from "nestjs-redis"
 
 import {AppController} from "./app.controller"
 
@@ -33,8 +33,8 @@ export class AppModule {}
 ### InjectRedis()
 
 ```ts
+import {InjectRedis} from "@brandonnpm2/nestjs-redis"
 import {Controller, Get, Param} from "@nestjs/common"
-import {InjectRedis} from "nestjs-redis"
 
 import type {Redis} from "ioredis"
 
@@ -48,4 +48,43 @@ export class AppController {
     return something
   }
 }
+```
+
+### Mocking for tests
+
+```ts
+import {REDIS_TOKEN, RedisModule} from "@brandonnpm2/nestjs-redis"
+import {Test} from "@nestjs/testing"
+
+import type {Redis} from "ioredis"
+
+describe(`test`, () => {
+  let redis: Redis
+
+  beforeAll(async () => {
+    const module = await Test.createTestingModule({
+      imports: [
+        RedisModule.register({
+          port: 6379,
+          host: `127.0.0.1`,
+        }),
+      ],
+    })
+
+    redis = module.get(REDIS_TOKEN)
+  })
+
+  beforeEach(async () => {
+    await redis.flushall()
+  })
+
+  test(`basic test`, async () => {
+    const FOO = `bar`
+
+    await redis.set(`foo`, FOO)
+
+    const res = await redis.get(`foo`)
+    expect(res).toEqual(FOO)
+  })
+})
 ```
