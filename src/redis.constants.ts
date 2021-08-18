@@ -1,1 +1,2 @@
 export const REDIS_TOKEN = `REDIS_TOKEN`
+export const REDIS_OPTIONS_TOKEN = `REDIS_OPTIONS_TOKEN`
